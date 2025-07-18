@@ -1,0 +1,49 @@
+### Register a new user
+POST http://localhost:5000/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Sani Jonathan",
+  "email": "sanij667@gmail.com",
+  "password": "123456",
+  "role": "admin"
+}
+
+###
+
+###  Login user
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "email": "sanij667@gmail.com",
+  "password": "123456"
+}
+
+##
+
+###  Get all products
+GET http://localhost:5000/api/products
+Accept: application/json
+
+###
+
+###  Add a product (Admin only)
+POST http://localhost:5000/api/products
+Content-Type: application/json
+Authorization: Bearer {{TOKEN_HERE}}
+
+{
+  "productName": "iPhone 15",
+  "cost": 1200,
+  "productImages": ["https://example.com/image.jpg"],
+  "description": "Latest Apple phone",
+  "stockStatus": "in-stock"
+}
+
+###
+
+###  Delete a product (replace PRODUCT_ID)
+DELETE http://localhost:5000/api/products/PRODUCT_ID
+Authorization: Bearer {{TOKEN_HERE}}
+
