@@ -1,5 +1,5 @@
 ### Register a new user
-POST http://localhost:5000/auth/register
+POST https://e-commerce-api-heyc.onrender.com/auth/register
 Content-Type: application/json
 
 {
@@ -12,7 +12,7 @@ Content-Type: application/json
 ###
 
 ###  Login user
-POST http://localhost:5000/auth/login
+POST https://e-commerce-api-heyc.onrender.com/auth/login
 Content-Type: application/json
 
 {
@@ -23,13 +23,13 @@ Content-Type: application/json
 ##
 
 ###  Get all products
-GET http://localhost:5000/api/products
+GET https://e-commerce-api-heyc.onrender.com/products
 Accept: application/json
 
 ###
 
 ###  Add a product (Admin only)
-POST http://localhost:5000/api/products
+POST https://e-commerce-api-heyc.onrender.com/products
 Content-Type: application/json
 Authorization: Bearer {{TOKEN_HERE}}
 
@@ -44,6 +44,6 @@ Authorization: Bearer {{TOKEN_HERE}}
 ###
 
 ###  Delete a product (replace PRODUCT_ID)
-DELETE http://localhost:5000/api/products/PRODUCT_ID
+DELETE https://e-commerce-api-heyc.onrender.com/products/<product_id>
 Authorization: Bearer {{TOKEN_HERE}}
 
