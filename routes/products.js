@@ -3,10 +3,14 @@ const router = express.Router();
 const Product = require('../models/Product');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
+
 Product.schema.plugin(mongoosePaginate);
 
-router.get('/brand/:brandId/:page/:limit', async (req, res) => {
-  const { brandId, page, limit } = req.params;
+
+router.get('/brands/:brandId/products', async (req, res) => {
+  const { brandId } = req.params;
+  const { page = 1, limit = 10 } = req.query;
+
   try {
     const result = await Product.paginate(
       { brand: brandId },
