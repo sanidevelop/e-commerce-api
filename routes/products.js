@@ -1,3 +1,5 @@
+const express = require('express');
+const router = express.Router();
 const Product = require('../models/Product');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
@@ -19,3 +21,5 @@ router.get('/brand/:brandId/:page/:limit', async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 });
+
+module.exports = router;
