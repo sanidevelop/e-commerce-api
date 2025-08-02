@@ -5,7 +5,6 @@ const Product = require('../models/Product');
 const { authMiddleware, adminOnly } = require('../middleware/auth');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
-// Apply pagination plugin
 Product.schema.plugin(mongoosePaginate);
 
 // Admin: Create a brand
