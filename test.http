@@ -1,49 +1,59 @@
 ### Register a new user
-POST https://e-commerce-api-heyc.onrender.com/auth/register
+POST http://localhost:5000/api/auth/register
 Content-Type: application/json
 
 {
-  "fullName": "Sani Jonathan",
-  "email": "sanij667@gmail.com",
-  "password": "123456",
+  "fullName": "Admin User",
+  "email": "admin@example.com",
+  "password": "password123",
   "role": "admin"
 }
 
 ###
 
-###  Login user
-POST https://e-commerce-api-heyc.onrender.com/auth/login
+### Login
+POST http://localhost:5000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "sanij667@gmail.com",
-  "password": "123456"
-}
-
-##
-
-###  Get all products
-GET https://e-commerce-api-heyc.onrender.com/products
-Accept: application/json
-
-###
-
-###  Add a product (Admin only)
-POST https://e-commerce-api-heyc.onrender.com/products
-Content-Type: application/json
-Authorization: Bearer {{TOKEN_HERE}}
-
-{
-  "productName": "iPhone 15",
-  "cost": 1200,
-  "productImages": ["https://example.com/image.jpg"],
-  "description": "Latest Apple phone",
-  "stockStatus": "in-stock"
+  "email": "admin@example.com",
+  "password": "password123"
 }
 
 ###
 
-###  Delete a product (replace PRODUCT_ID)
-DELETE https://e-commerce-api-heyc.onrender.com/products/<product_id>
-Authorization: Bearer {{TOKEN_HERE}}
+### Create a brand (Admin only)
+POST http://localhost:5000/api/brands
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
 
+{
+  "brandName": "Nike"
+}
+
+###
+
+### Get all brands
+GET http://localhost:5000/api/brands
+
+###
+
+### Update a brand (Admin only)
+PUT http://localhost:5000/api/brands/{{BRAND_ID}}
+Authorization: Bearer {{TOKEN}}
+Content-Type: application/json
+
+{
+  "brandName": "Adidas"
+}
+
+###
+
+### Delete a brand (Admin only)
+DELETE http://localhost:5000/api/brands/{{BRAND_ID}}
+Authorization: Bearer {{TOKEN}}
+
+###
+
+### Get paginated products by brand
+GET http://localhost:5000/api/products/{{BRAND_ID}}/1/10
