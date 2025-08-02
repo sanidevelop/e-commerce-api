@@ -23,7 +23,7 @@ Content-Type: application/json
 ###
 
 ### Create a brand (Admin only)
-POST http://localhost:5000/api/brands
+POST https://e-commerce-api-heyc.onrender.com/brands
 Authorization: Bearer {{TOKEN}}
 Content-Type: application/json
 
