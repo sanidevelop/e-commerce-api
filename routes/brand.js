@@ -1,19 +1,24 @@
 const express = require('express');
 const router = express.Router();
 const Brand = require('../models/Brand');
-const { verifyToken, verifyAdmin } = require('../middleware/auth');
+const Product = require('../models/Product');
+const { authMiddleware, adminOnly } = require('../middleware/auth');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
-// POST - Add a brand (admin only)
-router.post('/', verifyToken, verifyAdmin, async (req, res) => {
+// Apply pagination plugin
+Product.schema.plugin(mongoosePaginate);
+
+// Admin: Create a brand
+router.post('/', authMiddleware, adminOnly, async (req, res) => {
   try {
-    const brand = await Brand.create({ brandName: req.body.brandName });
+    const brand = await Brand.create(req.body);
     res.status(201).json(brand);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// GET - List all brands
+// Get all brands
 router.get('/', async (req, res) => {
   try {
     const brands = await Brand.find();
@@ -23,21 +28,41 @@ router.get('/', async (req, res) => {
   }
 });
 
-// PUT - Update brand by ID (admin only)
-router.put('/:id', verifyToken, verifyAdmin, async (req, res) => {
+// Admin: Update a brand
+router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
-    const updated = await Brand.findByIdAndUpdate(req.params.id, { brandName: req.body.brandName }, { new: true });
+    const updated = await Brand.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!updated) return res.status(404).json({ message: 'Brand not found' });
     res.json(updated);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
 
-// DELETE - Delete brand by ID (admin only)
-router.delete('/:id', verifyToken, verifyAdmin, async (req, res) => {
+// Admin: Delete a brand
+router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
-    await Brand.findByIdAndDelete(req.params.id);
+    const deleted = await Brand.findByIdAndDelete(req.params.id);
+    if (!deleted) return res.status(404).json({ message: 'Brand not found' });
     res.json({ message: 'Brand deleted' });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+// Get paginated products by brand
+router.get('/:brandId/products/:page/:limit', async (req, res) => {
+  const { brandId, page, limit } = req.params;
+  try {
+    const result = await Product.paginate(
+      { brand: brandId },
+      {
+        page: parseInt(page),
+        limit: parseInt(limit),
+        populate: 'brand'
+      }
+    );
+    res.json(result);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
