@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ### Create a brand (Admin only)
 POST https://e-commerce-api-heyc.onrender.com/brands
-Authorization: Bearer {{TOKEN}}
+Authorization: Bearer <your_token>
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ GET https://e-commerce-api-heyc.onrender.com/brands
 
 ### Update a brand (Admin only)
 PUT https://e-commerce-api-heyc.onrender.com/brands/PUT_BRAND_ID_HERE
-Authorization: Bearer {{TOKEN}}
+Authorization: Bearer <your_token>
 Content-Type: application/json
 
 {
@@ -51,9 +51,9 @@ Content-Type: application/json
 
 ### Delete a brand (Admin only)
 DELETE https://e-commerce-api-heyc.onrender.com/brands/PUT_BRAND_ID_HERE
-Authorization: Bearer {{TOKEN}}
+Authorization: Bearer <your_token>
 
 ###
 
 ### Get paginated products by brand
-GET https://e-commerce-api-heyc.onrender.com/brands/PUT_BRAND_ID_HERE/products?page=1&limit=5
+GET https://e-commerce-api-heyc.onrender.com/brands/PUT_BRAND_ID_HERE/products?page=1&limit=10
