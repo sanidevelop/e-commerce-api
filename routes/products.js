@@ -4,8 +4,6 @@ const Product = require('../models/Product');
 const mongoosePaginate = require('mongoose-paginate-v2');
 
 
-Product.schema.plugin(mongoosePaginate);
-
 
 router.get('/brands/:brandId/products', async (req, res) => {
   const { brandId } = req.params;
