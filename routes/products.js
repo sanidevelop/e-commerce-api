@@ -23,6 +23,7 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
       description,
       stockStatus,
       brand: brandId,
+      ownerId: req.user.userId
     });
 
     res.status(201).json(product);
