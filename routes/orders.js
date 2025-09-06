@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 const { authMiddleware, adminOnly } = require('../middleware/auth');
-
 
 router.post('/', authMiddleware, async (req, res) => {
   try {
@@ -16,19 +16,31 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(400).json({ message: 'Orders must be a non-empty array' });
     }
 
-    const createdOrders = await Order.insertMany(
-      ordersData.map(order => ({
-        ...order,
-        ownerId: req.user._id,
-      }))
-    );
+    const createdOrders = [];
+    for (const order of ordersData) {
+      const product = await Product.findById(order.productId);
+      if (!product) {
+        return res.status(404).json({ message: `Product with ID ${order.productId} not found` });
+      }
+
+      const newOrder = new Order({
+        productId: product._id,
+        productName: product.productName,
+        quantity: order.quantity,
+        totalCost: product.cost * order.quantity,
+        ownerId: req.user.userId,
+        shippingStatus: 'pending',
+      });
+
+      await newOrder.save();
+      createdOrders.push(newOrder);
+    }
 
     res.status(201).json(createdOrders);
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
 });
-
 
 router.get('/', authMiddleware, adminOnly, async (req, res) => {
   try {
