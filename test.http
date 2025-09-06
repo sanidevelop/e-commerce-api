@@ -1,4 +1,8 @@
-### Register a new user
+### --------------------
+### AUTH
+### --------------------
+
+### Register a new user (Admin)
 POST https://e-commerce-api-heyc.onrender.com/auth/register
 Content-Type: application/json
 
@@ -11,7 +15,20 @@ Content-Type: application/json
 
 ###
 
-### Login
+### Register a new user (Customer)
+POST https://e-commerce-api-heyc.onrender.com/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Customer User",
+  "email": "customer@example.com",
+  "password": "password123",
+  "role": "customer"
+}
+
+###
+
+### Login (Admin)
 POST https://e-commerce-api-heyc.onrender.com/auth/login
 Content-Type: application/json
 
@@ -21,6 +38,21 @@ Content-Type: application/json
 }
 
 ###
+
+### Login (Customer)
+POST https://e-commerce-api-heyc.onrender.com/auth/login
+Content-Type: application/json
+
+{
+  "email": "customer@example.com",
+  "password": "password123"
+}
+
+---
+
+### --------------------
+### BRANDS
+### --------------------
 
 ### Create a brand (Admin only)
 POST https://e-commerce-api-heyc.onrender.com/brands
@@ -53,7 +85,81 @@ Content-Type: application/json
 DELETE https://e-commerce-api-heyc.onrender.com/brands/PUT_BRAND_ID_HERE
 Authorization: Bearer <your_token>
 
+---
+
+### --------------------
+### PRODUCTS
+### --------------------
+
+### Create a product (Admin only)
+POST https://e-commerce-api-heyc.onrender.com/products
+Authorization: Bearer <your_token>
+Content-Type: application/json
+
+{
+  "productName": "Air Max 270",
+  "cost": 150,
+  "productImages": ["https://example.com/image.jpg"],
+  "description": "Lightweight running shoes",
+  "stockStatus": "in-stock",
+  "brandId": "PUT_BRAND_ID_HERE"
+}
+
+###
+
+### Get all products (Public)
+GET https://e-commerce-api-heyc.onrender.com/products
+
 ###
 
 ### Get paginated products by brand
-GET https://e-commerce-api-heyc.onrender.com/brands/PUT_BRAND_ID_HERE/products?page=1&limit=10
+GET https://e-commerce-api-heyc.onrender.com/products/brands/PUT_BRAND_ID_HERE?page=1&limit=10
+
+###
+
+### Delete a product (Admin only)
+DELETE https://e-commerce-api-heyc.onrender.com/products/PUT_PRODUCT_ID_HERE
+Authorization: Bearer <your_token>
+
+---
+
+### --------------------
+### ORDERS
+### --------------------
+
+### Create an order (Customer only)
+POST https://e-commerce-api-heyc.onrender.com/orders
+Authorization: Bearer <your_token>
+Content-Type: application/json
+
+{
+  "orders": [
+    {
+      "productId": "PUT_PRODUCT_ID_HERE",
+      "quantity": 2
+    }
+  ]
+}
+
+###
+
+### Get all orders (Admin only)
+GET https://e-commerce-api-heyc.onrender.com/orders
+Authorization: Bearer <your_token>
+
+###
+
+### Get single order by ID (Admin only)
+GET https://e-commerce-api-heyc.onrender.com/orders/PUT_ORDER_ID_HERE
+Authorization: Bearer <your_token>
+
+###
+
+### Update order status (Admin only)
+PUT https://e-commerce-api-heyc.onrender.com/orders/PUT_ORDER_ID_HERE
+Authorization: Bearer <your_token>
+Content-Type: application/json
+
+{
+  "shippingStatus": "shipped"
+}

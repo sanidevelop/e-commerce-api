@@ -1,40 +1,56 @@
 # E-commerce RESTful API (Node.js + MongoDB)
-This is a simple e-commerce backend built with Node.js, Express, and MongoDB. It features JWT-based authentication and role-based access control, product management, brand management, and paginated product listing by brand.
+
+This is a simple e-commerce backend built with Node.js, Express, and MongoDB.  
+It features JWT-based authentication, role-based access control, product management, brand management, order management, and paginated product listing by brand.
+
+---
 
 ## Overview
 This project is a basic e-commerce backend built using **Node.js**, **Express**, and **MongoDB**. It supports:
 - User Registration & Login with JWT
-- Role-based access control (admin/customer)
+- Role-based access control (Admin/Customer)
 - Product listing, creation, and deletion
 - Brand listing, creation, update and deletion
+- Orders (Customer can create, Admin can manage)
+- Paginated products by brand
+
+---
 
 ## 🔗 Live API
-
 Deployed on Render:  
 **https://e-commerce-api-heyc.onrender.com**
 
-## Features
+---
+
+## ✨ Features
 - JWT Authentication
 - User Registration & Login (JWT-based)
 - Role-based Authorization (Admin & Customer)
-- Create, List, and Delete Products (Admin only)
-- Create, Update, Delete, and Get Brands (Admin only)
+- Create, List, and Delete Products (Admin only for create/delete)
+- Create, Update, Delete, and Get Brands (Admin only for create/update/delete)
 - Paginated Product Listing by Brand
+- Create Orders (Customers only)
+- Manage Orders (Admins only → view/update status)
 - MongoDB Atlas Integration
 - Mongoose ODM
-- Secure Password Hashing
-- Postman Collection for Testing
+- Secure Password Hashing with Bcrypt
+- Postman Collection / VSCode REST Client (`test.http`) for Testing
 
-## Tech Stack
+---
+
+## 🛠 Tech Stack
 - Node.js
-- Express
+- Express.js
 - MongoDB + Mongoose
 - JWT
 - Bcrypt
+- mongoose-paginate-v2
+- Render (Deployment)
+
+---
 
 ## 🔐 Authentication
-
-Authentication is handled using JSON Web Tokens (JWT).  
+Authentication is handled using **JSON Web Tokens (JWT)**.  
 You must log in and include your token in the request headers for all protected endpoints.
 
 **Header format:**
@@ -64,8 +80,8 @@ node server.js
 ## API Endpoints
 
 ### Auth
-- `POST /auth/register`
-- `POST /auth/login`
+- `POST /auth/register` - Register a new user
+- `POST /auth/login` - Login user and get token
 
 ### Products
 - `GET /products` – Retrieve all products (public)
@@ -79,3 +95,16 @@ node server.js
 - `PUT /brands/:id` – Update brand by ID (Admin only)
 - `DELETE /brands/:id` – Delete brand by ID (Admin only)
 
+### Orders
+- `POST /orders` - Create a new order (Customer-only)
+- `GET /orders` - View all orders (Admin-only)
+- `GET /orders/:id` - View a single order by ID (Admin-only)
+- `PUT /orders/:id` → Update order status (Admin-only)
+
+### 🧪 Testing
+
+- You can test the API using:
+
+- Postman Collection (import endpoints manually)
+
+- VSCode REST Client with the provided test.http file
