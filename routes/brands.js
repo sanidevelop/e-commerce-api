@@ -7,7 +7,6 @@ const mongoosePaginate = require('mongoose-paginate-v2');
 
 Product.schema.plugin(mongoosePaginate);
 
-// Admin: Create a brand
 router.post('/', authMiddleware, adminOnly, async (req, res) => {
   try {
     const brand = await Brand.create(req.body);
@@ -17,7 +16,7 @@ router.post('/', authMiddleware, adminOnly, async (req, res) => {
   }
 });
 
-// Get all brands
+
 router.get('/', async (req, res) => {
   try {
     const brands = await Brand.find();
@@ -27,7 +26,6 @@ router.get('/', async (req, res) => {
   }
 });
 
-// Admin: Update a brand
 router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
     const updated = await Brand.findByIdAndUpdate(req.params.id, req.body, { new: true });
@@ -38,7 +36,6 @@ router.put('/:id', authMiddleware, adminOnly, async (req, res) => {
   }
 });
 
-// Admin: Delete a brand
 router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
   try {
     const deleted = await Brand.findByIdAndDelete(req.params.id);
@@ -49,7 +46,6 @@ router.delete('/:id', authMiddleware, adminOnly, async (req, res) => {
   }
 });
 
-// Get paginated products by brand
 router.get('/:brandId/products/:page/:limit', async (req, res) => {
   const { brandId, page, limit } = req.params;
   try {
